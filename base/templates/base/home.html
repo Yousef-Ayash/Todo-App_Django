@@ -1,0 +1,64 @@
+{% extends "main.html" %}
+
+{% load static %}
+
+{% block content %}
+<main class="main-container">
+    <div class="frame-container">
+
+        <div class="actions">
+            <div class="user-ux">
+                {% if request.user.is_authenticated %}
+                <span>Welcome {{request.user}}!</span>
+                <a href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                <span></span>
+                <a href="{% url 'login' %}">Login</a>
+                {% endif %}
+            </div>
+
+            <div class="actions-action">
+                <form action="{% url 'home' %}" method="GET">
+                    <input type="text" name="task" class="task-search" placeholder="Search Tasks..." />
+                </form>
+                <a href="{% url 'create-task' %}" class="btn-create">Create a New Task</a>
+            </div>
+        </div>
+
+        <div class="tasks-container">
+            <div class="tasks-wrapper">
+                {% for task in tasks %}
+                    {% if request.user == task.user %}
+                    <div class="task">
+                        <div class="task-top">
+                            <div class="task-left-side">
+                                {% if task.complete == False %}
+                                <span class="task-check"></span>
+                                <span class="task-name" data-el="{{task.id}}">{{task.name}}</span>
+                                {% else %}
+                                <span class="task-checked"></span>
+                                <span class="task-name" data-el="{{task.id}}"><s><i>{{task.name}}</i></s></span>
+                                {% endif %}
+                            </div>
+                            <div class="task-right-side">
+                                <a href="{% url 'update-task' task.id %}" class="btn-task-edit"><img src="{% static 'images/Pen(Edit).svg' %}"></a>
+                                <a href="{% url 'delete-task' task.id %}" class="btn-task-delete"><img src="{% static 'images/x.svg' %}"></a>
+                            </div>
+                        </div>
+                        <div class="task-bottom" data-b="{{task.id}}">
+                            {% if task.description == "" %}
+                            <span class="task-description"><i><u><small>This Task Has No Description</small></u></i></span>
+                            {% else %}
+                            <span class="task-description">{{task.description}}</span>
+                            {% endif %}
+                            <span class="task-date">{{task.updated}}</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</main>
+{% endblock %}

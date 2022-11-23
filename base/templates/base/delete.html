@@ -1,0 +1,17 @@
+{% extends "main.html" %}
+
+{% block content %}
+<main class="main-container">
+    <div class="delete-wrapper">
+        <div class="title-container">Delete a Task</div>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <span>Are You Sure You Want To Delete "<u>{{task}}</u>" ?</span>
+            <div>
+                <a href="{{request.META.HTTP_REFERER}}" class="delete-cancel">Cancel</a>
+                <button type="submit" class="btn-delete-confirm">Confirm</button>
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}

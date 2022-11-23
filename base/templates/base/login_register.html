@@ -1,0 +1,58 @@
+{% extends "main.html" %}
+
+{% load static %}
+
+{% block content %}
+<main class="main-container">
+
+    {% if page == 'login' %}
+    <div class="login-register-container">
+        <div class="title-container">Login</div>
+        <form action="" method="POST">
+        {% csrf_token %}
+            <div class="username-container">
+                <label for="username">Username:</label>
+                <div class="user-input">
+                    <input type="text" id="username" name="username" placeholder="ex: Mark Down">
+                </div>
+            </div>
+            <div class="password-container">
+                <label for="password">Password:</label>
+                <div class="user-input">
+                    <input type="password" id="password" name="password">
+                </div>
+            </div>
+            <button type="submit" class="btn-login-signin">Login</button>
+            <div class="log-sign-wrapper">
+                <p>Haven't signed up yet?</p>
+                <a href="{% url 'register' %}" class="btn-log-sign">Sign Up</a>
+            </div>
+        </form>
+    </div>
+
+    {% else %}
+
+    <div class="login-register-container">
+        <div class="title-container">Register</div>
+        <form action="" method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="username-container">
+                <label for="username">{{field.label}}:</label>
+                <div class="user-input">
+                    {{field}}
+                </div>
+            </div>
+        {% endfor %}
+            <button type="submit" class="btn-login-signin">Sign in</button>
+            <div class="log-sign-wrapper">
+                <p>Already signed up?</p>
+                <a href="{% url 'login' %}" class="btn-log-sign">Login</a>
+            </div>
+        </form>
+    </div>
+    {% endif %}
+
+</main>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "main.html" %}
+
+{% load static %}
+
+{% block content %}
+<main class="main-container">
+    <div class="create-edit-container">
+        <div class="title-container">Create/Edit Task</div>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="task-{{field.name}}-container">
+                <label for="task-{{field.name}}">{{field.label}}{%if field.name != 'complete'%}:{%endif%} </label>
+                <div class="task-input-{{field.name}}">
+                    {{field}}
+                </div>
+            </div>
+            {% endfor %}            
+            <div class="task-buttons-container">
+                <a href="{% url 'home' %}" class="btn-form-control">Cancel</a>
+                <button type="submit" class="btn-form-control">Submit</button>
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}
